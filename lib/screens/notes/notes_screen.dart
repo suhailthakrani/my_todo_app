@@ -69,12 +69,12 @@ class _NotesScreenState extends State<NotesScreen> {
                                 softWrap: true,
                               ),
                               Text(
-                                notes[index].description,
+                                notes[index].body,
                                 style: textTheme.bodyMedium,
                                 softWrap: true,
                               ),
                               Text(
-                                notes[index].time,
+                                notes[index].creationDateTime.toString(),
                                 style: textTheme.bodySmall,
                                 softWrap: true,
                               ),
