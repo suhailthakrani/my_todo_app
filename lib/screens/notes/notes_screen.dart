@@ -25,11 +25,14 @@ class _NotesScreenState extends State<NotesScreen> {
           children: [
             // GreetingHeader(textTheme: textTheme),
             Container(
-              height: 40,
+              height: 50,
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
                 decoration: InputDecoration(
                   hintText: 'Search Notes',
+                  hintStyle: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  ),
                   prefixIcon: Icon(Icons.search),
                 ),
               ),
@@ -116,13 +119,7 @@ class _NotesScreenState extends State<NotesScreen> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AddNote(
-                    noteSetter: (value) {
-                      setState(() {
-                        notes.add(value);
-                      });
-                    },
-                  ),
+                  builder: (context) => AddNote(),
                 ));
           },
           child: Icon(

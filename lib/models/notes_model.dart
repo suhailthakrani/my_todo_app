@@ -8,26 +8,23 @@ class Notes {
 }
 
 class Note {
-  final int id;
+  // final int id;
   final String title;
   final String body;
   final DateTime creationDateTime;
 
   Note({
-    required this.id,
     required this.title,
     required this.body,
     required this.creationDateTime,
   });
 
   Note copyWith({
-    int? id,
     String? title,
     String? body,
     DateTime? creationDateTime,
   }) {
     return Note(
-      id: id ?? this.id,
       title: title ?? this.title,
       body: body ?? this.body,
       creationDateTime: creationDateTime ?? this.creationDateTime,
@@ -36,7 +33,6 @@ class Note {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
       'title': title,
       'body': body,
       'creationDateTime': creationDateTime.millisecondsSinceEpoch,
@@ -45,11 +41,9 @@ class Note {
 
   factory Note.fromMap(Map<String, dynamic> map) {
     return Note(
-      id: map['id'] as int,
       title: map['title'] as String,
       body: map['body'] as String,
-      creationDateTime:
-          DateTime.fromMillisecondsSinceEpoch(map['creationDateTime'] as int),
+      creationDateTime: map['creationDateTime'] as DateTime,
     );
   }
 
@@ -59,25 +53,19 @@ class Note {
       Note.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() {
-    return 'Note(id: $id, title: $title, body: $body, creationDateTime: $creationDateTime)';
-  }
+  String toString() =>
+      'Note(title: $title, body: $body, creationDateTime: $creationDateTime)';
 
   @override
   bool operator ==(covariant Note other) {
     if (identical(this, other)) return true;
 
-    return other.id == id &&
-        other.title == title &&
+    return other.title == title &&
         other.body == body &&
         other.creationDateTime == creationDateTime;
   }
 
   @override
-  int get hashCode {
-    return id.hashCode ^
-        title.hashCode ^
-        body.hashCode ^
-        creationDateTime.hashCode;
-  }
+  int get hashCode =>
+      title.hashCode ^ body.hashCode ^ creationDateTime.hashCode;
 }

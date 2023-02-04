@@ -13,20 +13,22 @@ class _ToDoScreenState extends State<ToDoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Text("tdata"),
-        ],
-      ),
-               floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-           //show dialog box
-          },
-          child: Icon(
-            Icons.add,
-          ),
+      body: Center(
+        child: Column(
+          children: [
+            Text("TODO data"),
+          ],
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          //show dialog box
+        },
+        child: Icon(
+          Icons.add,
+        ),
+      ),
     );
   }
 }

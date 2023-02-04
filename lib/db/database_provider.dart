@@ -31,17 +31,25 @@ class DatabaseProvider {
       version: 1,
     );
   }
+
   addNewNote(Note note) async {
     final db = await dataBase;
-    db!.insert('notes', note.toMap(), conflictAlgorithm: ConflictAlgorithm.replace, );
+
+    db!.insert(
+      'notes',
+      note.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
+
   Future<dynamic> getNotes() async {
     final db = await dataBase;
     var res = await db!.query('notes');
-    if (res.isEmpty) {return null;}
-    else {
+    if (res.isEmpty) {
+      return null;
+    } else {
       var resMap = res.toList();
-      return resMap.isNotEmpty? resMap: null;
+      return resMap.isNotEmpty ? resMap : null;
     }
   }
 }

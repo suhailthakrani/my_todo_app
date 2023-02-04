@@ -54,22 +54,31 @@ class _HomeScreenState extends State<HomeScreen> {
       darkTheme: darkTheme,
       themeMode: themeController.themeMode,
       home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Hi, Suhail Thakrani",
-            style: textTheme.headlineSmall,
-          ),
-          actions: [
-            Switch(
-              value: themeController.themeMode == ThemeMode.dark,
-              onChanged: (value) {
-                print(themeController.themeMode == ThemeMode.dark);
-                themeController.toggleTheme(isDark: value);
-              },
-            ),
-            SizedBox(width: 12),
-          ],
-        ),
+        appBar: _selectedIndex == 0
+            ? AppBar(
+                title: Text(
+                  "Hi, Suhail Thakrani",
+                  style: textTheme.displayMedium!.copyWith(
+                    color: Colors.indigo.shade800,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24,
+                  ),
+                ),
+                actions: [
+                  Switch(
+                    value: themeController.themeMode == ThemeMode.dark,
+                    onChanged: (value) {
+                      print(themeController.themeMode == ThemeMode.dark);
+                      themeController.toggleTheme(isDark: value);
+                    },
+                  ),
+                  SizedBox(width: 12),
+                ],
+              )
+            : PreferredSize(
+                child: Container(),
+                preferredSize: Size.fromHeight(30),
+              ),
         body: _screens[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
             selectedItemColor:
