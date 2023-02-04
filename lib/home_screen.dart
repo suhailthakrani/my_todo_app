@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:my_todo_app/screens/notes/components/add_note.dart';
 import 'package:my_todo_app/screens/notes/notes_screen.dart';
+import 'package:my_todo_app/screens/settings/settings_screen.dart';
 import 'package:my_todo_app/screens/todo/todo_screen.dart';
 import 'package:my_todo_app/theme/theme_constants.dart';
 import 'package:my_todo_app/theme/theme_controller.dart';
 
-ThemeController _themeController = ThemeController();
+ThemeController themeController = ThemeController();
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,35 +18,31 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool isDarkTheme = false;
 
-  int _selectedIndex = 0;
-   
-
-  final List<Widget> _screens = [
-    NotesScreen(),
-    ToDoScreen(),
-  ];
-  @override
-  void dispose() {
-    _themeController.removeListener(() {
-      themeListener();
-    });
-    super.dispose();
-  }
-
   @override
   void initState() {
-    _themeController.addListener(() {
-      themeListener();
-    });
+    themeController.addListener(themeRefresher);
     super.initState();
   }
 
-  //
-  themeListener() {
+  @override
+  void dispose() {
+    themeController.removeListener(themeRefresher);
+    super.dispose();
+  }
+
+  themeRefresher() {
     if (mounted) {
       setState(() {});
     }
   }
+
+  int _selectedIndex = 0;
+
+  final List<Widget> _screens = [
+    NotesScreen(),
+    ToDoScreen(),
+    // SettingsScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -55,17 +52,37 @@ class _HomeScreenState extends State<HomeScreen> {
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: _themeController.themeMode,
+      themeMode: themeController.themeMode,
       home: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Hi, Suhail Thakrani",
+            style: textTheme.headlineSmall,
+          ),
+          actions: [
+            Switch(
+              value: themeController.themeMode == ThemeMode.dark,
+              onChanged: (value) {
+                print(themeController.themeMode == ThemeMode.dark);
+                themeController.toggleTheme(isDark: value);
+              },
+            ),
+            SizedBox(width: 12),
+          ],
+        ),
         body: _screens[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
+            selectedItemColor:
+                Theme.of(context).bottomNavigationBarTheme.selectedItemColor,
+            unselectedItemColor:
+                Theme.of(context).bottomNavigationBarTheme.unselectedItemColor,
             currentIndex: _selectedIndex,
             onTap: (value) {
               setState(() {
                 _selectedIndex = value;
               });
             },
-            items: [
+            items: const [
               BottomNavigationBarItem(
                 label: 'Notes',
                 icon: Icon(
@@ -78,8 +95,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.task_alt_outlined,
                 ),
               ),
+              // BottomNavigationBarItem(
+              //   label: 'Settings',
+              //   icon: Icon(
+              //     Icons.settings,
+              //   ),
+              // ),
             ]),
-
       ),
     );
   }

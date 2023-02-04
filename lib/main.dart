@@ -5,6 +5,7 @@ import 'package:my_todo_app/theme/theme_controller.dart';
 
 void main() {
   runApp(const MyApp());
+  final GlobalKey homeScreenKey = GlobalKey();
 }
 
 class MyApp extends StatelessWidget {
