@@ -22,6 +22,10 @@ class _AddNoteState extends State<AddNote> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   bool editingStarted = false;
+  //
+  String? title;
+  String? body;
+  DateTime? creationDateTime;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,11 +63,21 @@ class _AddNoteState extends State<AddNote> {
           editingStarted
               ? InkWell(
                   onTap: () async {
-                    await DatabaseProvider.db.addNewNote(Note.fromMap({
-                      'title': _titleController.text,
-                      'body': _descriptionController.text,
-                      'creationDateTime': DateTime.now()
-                    }));
+                    setState(() {
+                      title = _titleController.text;
+                      body = _descriptionController.text;
+                      creationDateTime = DateTime.now();
+                    });
+                    if (title != null &&
+                        body != null &&
+                        creationDateTime != null) {
+                      Note note = Note(
+                          title: title!,
+                          body: body!,
+                          creationDateTime: creationDateTime!);
+                      await DatabaseProvider.db.addNewNote(note);
+                    }
+
                     if (mounted) {
                       Navigator.of(context).pop();
                     }

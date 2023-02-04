@@ -17,16 +17,17 @@ class DatabaseProvider {
 
   initDB() async {
     return await openDatabase(
-      join(await getDatabasesPath(), 'my_todo_app.db'),
+      join(await getDatabasesPath(), 'todo_app.db'),
       onCreate: (db, version) {
         return db.execute('''
         CREATE TABLE notes(
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           title TEXT,
           body TEXT,
-          creationDate DATE
+          creationDateTime DATE
         )
       ''');
+      
       },
       version: 1,
     );
@@ -41,6 +42,11 @@ class DatabaseProvider {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
+  // deleteNote(Note note) async {
+  //   final db = await dataBase;
+
+  //   db!.delete('notes', where: 'columnId = ?', whereArgs: [id]);
+  // }
 
   Future<dynamic> getNotes() async {
     final db = await dataBase;

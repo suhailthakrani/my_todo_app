@@ -43,7 +43,7 @@ class Note {
     return Note(
       title: map['title'] as String,
       body: map['body'] as String,
-      creationDateTime: map['creationDateTime'] as DateTime,
+      creationDateTime: DateTime.fromMillisecondsSinceEpoch(map['creationDateTime'] as int),
     );
   }
 
@@ -53,19 +53,18 @@ class Note {
       Note.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() =>
-      'Note(title: $title, body: $body, creationDateTime: $creationDateTime)';
+  String toString() => 'Note(title: $title, body: $body, creationDateTime: $creationDateTime)';
 
   @override
   bool operator ==(covariant Note other) {
     if (identical(this, other)) return true;
-
-    return other.title == title &&
-        other.body == body &&
-        other.creationDateTime == creationDateTime;
+  
+    return 
+      other.title == title &&
+      other.body == body &&
+      other.creationDateTime == creationDateTime;
   }
 
   @override
-  int get hashCode =>
-      title.hashCode ^ body.hashCode ^ creationDateTime.hashCode;
+  int get hashCode => title.hashCode ^ body.hashCode ^ creationDateTime.hashCode;
 }
