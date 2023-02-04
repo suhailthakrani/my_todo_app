@@ -42,11 +42,9 @@ class _AddNoteState extends State<AddNote> {
                   onTap: () {
                     widget.noteSetter(Note.fromMap({
                       'title': _titleController.text,
-                      'description': _descriptionController.text,
-                      'date':
-                          '${DateTime.now().month}/ ${DateTime.now().day}/ ${DateTime.now().year}',
-                      'time':
-                          '${DateTime.now().hour}: ${DateTime.now().minute.abs()}'
+                      'body': _descriptionController.text,
+                      'creationDateTime':DateTime.now()
+                        
                     }));
                     Navigator.of(context).pop();
                   },
