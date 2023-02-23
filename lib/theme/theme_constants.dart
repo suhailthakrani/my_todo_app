@@ -1,27 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 ThemeData lightTheme = ThemeData(
   brightness: Brightness.light,
   useMaterial3: true,
   primaryColor: Colors.indigo.shade800,
-  // colorScheme: ColorScheme(
-  //     brightness: Brightness.light,
-  //     primary: Colors.indigo.shade800,
-  //     onPrimary: Colors.indigo.shade800,
-  //     secondary: Colors.indigo.shade500,
-  //     onSecondary: Colors.indigo.shade500,
-  //     error: Colors.red.shade400,
-  //     onError: Colors.red.shade500,
-  //     background: Colors.white,
-  //     onBackground: Colors.white,
-  //     surface: Colors.white,
-  //     onSurface: Colors.white,),
+
+ 
   textTheme: TextTheme(
-    headlineSmall: TextStyle(
-        fontWeight: FontWeight.w800,
-        color: Colors.indigo.shade800,
-        fontSize: 18,),
-   
+    titleLarge: TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.w700,
+      fontSize: 20,
+    ),
   ),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
@@ -49,6 +40,7 @@ ThemeData lightTheme = ThemeData(
 ThemeData darkTheme = ThemeData(
   brightness: Brightness.dark,
   useMaterial3: true,
+  cardTheme: const CardTheme(color: Colors.black54),
   inputDecorationTheme: InputDecorationTheme(
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(20),
@@ -71,5 +63,17 @@ ThemeData darkTheme = ThemeData(
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     selectedItemColor: Colors.white,
     unselectedItemColor: Colors.white,
+  ),
+  appBarTheme: AppBarTheme(
+    titleTextStyle: TextStyle(color: Colors.white),
+    systemOverlayStyle: SystemUiOverlayStyle.light,
+  ),
+ 
+  textTheme: TextTheme(
+    titleLarge: TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.w700,
+      fontSize: 20,
+    ),
   ),
 );

@@ -58,11 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ? AppBar(
                 title: Text(
                   "Hi, Suhail Thakrani",
-                  style: textTheme.displayMedium!.copyWith(
-                    color: Colors.indigo.shade800,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 24,
-                  ),
+                  style: textTheme.titleLarge,
                 ),
                 actions: [
                   Switch(
@@ -76,8 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               )
             : PreferredSize(
+                preferredSize: const Size.fromHeight(30),
                 child: Container(),
-                preferredSize: Size.fromHeight(30),
               ),
         body: _screens[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(

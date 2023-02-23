@@ -37,13 +37,14 @@ class _NotesScreenState extends State<NotesScreen> {
                 ),
               ),
             ),
+            SizedBox(height: 5),
             Expanded(
               child: Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: 12,
                   ),
-                  child: FutureBuilder(
-                    future: DatabaseProvider.db.getNotes(),
+                  child: StreamBuilder(
+                    stream: Stream.fromFuture(DatabaseProvider.db.getNotes()),
                     builder: (context, noteData) {
                       switch (noteData.connectionState) {
                         case ConnectionState.waiting:
@@ -72,28 +73,43 @@ class _NotesScreenState extends State<NotesScreen> {
 
                                   return Card(
                                     elevation: 3,
-                                    color: Color.fromARGB(255, 181, 206, 226),
+                                    color: Theme.of(context).cardColor,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                      child: Row(
                                         children: [
-                                          Text(
-                                            note.title,
-                                            style: textTheme.bodyLarge,
-                                            softWrap: true,
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  note.title,
+                                                  style: textTheme.bodyLarge,
+                                                  softWrap: true,
+                                                ),
+                                                Text(
+                                                  note.body,
+                                                  style: textTheme.bodyMedium,
+                                                  softWrap: true,
+                                                ),
+                                                Text(
+                                                  note.creationDateTime
+                                                      .toString(),
+                                                  style: textTheme.bodySmall,
+                                                  softWrap: true,
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          Text(
-                                            note.body,
-                                            style: textTheme.bodyMedium,
-                                            softWrap: true,
-                                          ),
-                                          Text(
-                                            note.creationDateTime.toString(),
-                                            style: textTheme.bodySmall,
-                                            softWrap: true,
-                                          ),
+                                          IconButton(
+                                              onPressed: () {},
+                                              icon: Icon(
+                                                Icons.delete,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .error,
+                                              )),
                                         ],
                                       ),
                                     ),

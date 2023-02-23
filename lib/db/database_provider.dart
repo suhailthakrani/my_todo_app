@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:my_todo_app/models/notes_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DatabaseProvider {
+class DatabaseProvider with ChangeNotifier {
   DatabaseProvider._();
   static final DatabaseProvider db = DatabaseProvider._();
   static Database? _database;
@@ -27,7 +28,6 @@ class DatabaseProvider {
           creationDateTime DATE
         )
       ''');
-      
       },
       version: 1,
     );
@@ -41,12 +41,14 @@ class DatabaseProvider {
       note.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    notifyListeners();
   }
-  // deleteNote(Note note) async {
-  //   final db = await dataBase;
+  deleteNote(int id) async {
+    final db = await dataBase;
 
-  //   db!.delete('notes', where: 'columnId = ?', whereArgs: [id]);
-  // }
+    db!.delete('notes', where: 'id = ?', whereArgs: [id]);
+    notifyListeners();
+  }
 
   Future<dynamic> getNotes() async {
     final db = await dataBase;
@@ -55,7 +57,15 @@ class DatabaseProvider {
       return null;
     } else {
       var resMap = res.toList();
+      
       return resMap.isNotEmpty ? resMap : null;
     }
+    
+  }
+
+  Stream<dynamic> getNotesStream() async* {
+    final db = await dataBase;
+    var res = await db?.query('notes');
+    yield res!.isNotEmpty ? res.toList() : null;
   }
 }
